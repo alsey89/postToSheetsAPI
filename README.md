@@ -21,18 +21,23 @@ Create an API endpoint that posts messages into a Slack channel (or Google Sprea
 
 3. Refactor and test the code
 
-   - [ ] Refactor the function: abstract the logic away from the interface layer
-   - [ ] Write automated tests using Jest
-   - [ ] Update documentation to include testing instructions
-   - [ ] Commit
+   - [x] Refactor the function: abstract the logic away from the interface layer
+   - [x] Deploy on replit
+   - [x] Code a simple frontend to hit the API
+   - [x] Update documentation
+   - [x] Commit
 
 # Google Sheets API
 
-This API provides two endpoints to interact with Google Sheets, allowing users to read and write data.
+This API saves messages to Google Sheets, along with a timestamp. To set up locally, copy the config folder (delivered via email) into the root directory and install the modules.
+
+Google Sheets for testing: https://docs.google.com/spreadsheets/d/1J1wqaKisURMwRKOjNS3e5Bme7KyMahrIB493Vd6_DJg/edit#gid=1416303371
 
 ## Base URL
 
-pending
+https://post-to-sheets-api.replit.app/ (temporary)
+
+Frontend form for testing: https://michaelchen.me (temporary)
 
 ## Endpoints
 
@@ -95,24 +100,37 @@ Appends data to the specified range in the given Google Sheet.
 
 #### 2. Get Spreadsheet Data (hardcoded, for testing api authentication)
 
-- Method: `GET`
-- Endpoint: `/sheet/get`
+- **Method**: `GET`
+- **URL**: `/sheet/get`
 
-**Response**
+- **Success Response:**
 
-- Status: `200`
-- Description: Returns the data from a hardcoded sample spreadsheet ("Messages!A:C").
+  - **Code:** `200 OK`
+  - **Content Example:**
 
-**Example**
+    ```json
+    {
+      "message": {
+        "range": "Messages!A:C",
+        "majorDimension": "ROWS",
+        "values": [
+          [
+            "2023-05-10T09:00:00.000Z",
+            "John Doe",
+            "Hello, this is a test message!"
+          ]
+        ]
+      }
+    }
+    ```
 
-```json
-{
-  "message": {
-    "range": "Messages!A:C",
-    "majorDimension": "ROWS",
-    "values": [
-      ["2023-05-10T09:00:00.000Z", "John Doe", "Hello, this is a test message!"]
-    ]
-  }
-}
-```
+- **Error Response:**
+
+  - **Code:** `500 Internal Server Error`
+  - **Content Example:**
+
+    ```json
+    {
+      "message": "Something went wrong"
+    }
+    ```
